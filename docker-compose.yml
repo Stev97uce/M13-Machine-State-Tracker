@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  cassandra:
+    image: cassandra:4.1
+    container_name: cassandra
+    ports:
+      - "9042:9042"
+    volumes:
+      - ./cassandra/init.cql:/docker-entrypoint-initdb.d/init.cql
+    networks:
+      - lavanet
+
+  machine-state-tracker:
+    build: .
+    container_name: machine-state-tracker
+    ports:
+      - "8082:8082"
+    depends_on:
+      - cassandra
+    environment:
+      - PORT=8082
+      - CASSANDRA_CONTACT_POINTS=cassandra
+      - CASSANDRA_KEYSPACE=machine_states
+    networks:
+      - lavanet
+
+networks:
+  lavanet:
+    driver: bridge
