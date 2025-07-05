@@ -1,8 +1,8 @@
 require('dotenv').config();
 const WebSocket = require('ws');
-const { v4: uuidv4 } = require('uuid');
-
 const { handleConnection } = require('./gateways/WebSocketGateway');
+
+require('./services/StateService');
 
 const PORT = process.env.PORT || 8082;
 const wss = new WebSocket.Server({ port: PORT });

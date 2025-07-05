@@ -12,4 +12,9 @@ function getCassandraClient() {
   });
 }
 
+getCassandraClient().connect()
+  .then(() => console.log('✅ Conexión exitosa a Cassandra'))
+  .catch(err => console.error('❌ Error de conexión a Cassandra:', err));
+
+
 module.exports = { getCassandraClient };
